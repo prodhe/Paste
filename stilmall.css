@@ -1,0 +1,351 @@
+/*****************************
+
+	Stilmall för Klistra.in 3.0
+
+*****************************/
+
+
+
+/*
+	nollställning samt generella inställningar för hela sajten
+	specifika inställningar hanteras på avskiljd del
+*/
+*,HTML { padding: 0; margin: 0; border: 0; }
+/*HTML,BODY { height: 100%; }*/
+BODY {
+	font-family: "Inconsolata", "Consolas", "Andale Mono", "Courier New";
+	font-size: 14px;
+	padding: 0px;
+	margin: 0px;
+	color: #333;
+}
+H1 {
+	color: #000;
+	font-size: 2.0em;
+	margin: 10px 0 10px 0;
+}
+H2 {
+	color: #000;
+	font-size: 1.8em;
+	margin: 10px 0 10px 0;
+}
+P {
+	margin: 15px 0 15px 0;
+}
+HR {
+	display: none;
+}
+A {
+	color: #224466;
+	text-decoration: none;
+}
+A:hover {
+	font-weight: normal;
+	color: #770000;
+	text-decoration: none;
+}
+UL {
+	margin: 10px;
+	padding: 3px;
+	margin-left: 40px;
+}
+FIELDSET {
+	margin: 10px 0 10px 0;
+	padding: 15px;
+	border: 2px solid #ababab;
+	font-size: 1.0em;
+	border-radius: 10px;
+}
+LEGEND {
+	margin-left: 15px;
+	padding: 10px 30px;
+	border-width: 2px 2px;
+	border-color: #ababab;
+	border-style: solid;
+	font-size: 1.2em;
+}
+TEXTAREA {
+	border: 2px solid #dedede;
+	background-color: #fff;
+	font-size: 0.9em;
+	font-family: "Inconsolata", "Consolas", "Andale Mono", "Courier New";
+	padding: 10px;
+	margin: 0;
+	width: 98%;
+}
+TEXTAREA:focus {
+	background-color: #efefef;
+}
+INPUT {
+	font-size: 1.0em;
+	border: 2px solid #dedede;
+	border-radius: 10px;
+	width: 200px;
+	padding: 2px 2px 2px 5px;
+	margin: 5px;
+	background-color: #fff;
+	color: #000;
+}
+BUTTON, INPUT[type="button"], INPUT[type="submit"] {
+	font-size: 1.0em;
+	border: 3px solid #cdcdcd;
+	border-radius: 10px;
+	width: 150px;
+	background-color: #efefef;
+	color: #888;
+}
+BUTTON:focus, BUTTON:hover, INPUT[type="button"]:focus, INPUT[type="button"]:hover, INPUT[type="submit"]:focus, INPUT[type="submit"]:hover {
+	color: #000;
+	border-color: #bcbcbc;
+}
+
+
+
+/*
+	huvudlager
+*/
+DIV#world {
+	position: relative;
+	padding: 0;
+	margin: 0;
+}
+
+
+	
+/*
+	header
+*/
+DIV#header {
+	position: relative;
+/*	height: 135px;*/
+	height: 60px;
+	margin: 0;
+	padding: 0;
+/*	border-bottom: 20px #722 solid;*/
+}
+DIV#header H1 {
+	font-size: 2.0em;
+	color: #000;
+	position: relative;
+/*	top: 15px;
+	right: 200px;*/
+	width: 440px;
+	height: 45px;
+	margin: 30px 0 10px 40px;
+	background-image: url("./images/logo_klistrain.png");
+	background-repeat: no-repeat;
+	display: block;
+}
+DIV#header H1 SPAN {
+	display: none;
+}
+
+
+
+/*
+	meny
+*/
+UL#menu {
+	position: absolute;
+	top: 15px;
+	left: 30px;
+	margin: 0;
+	padding: 0;
+	display: block;
+}
+UL#menu LI {
+	margin-right: 30px;
+	margin-bottom: 10px;
+	list-style: none;
+	float: left;
+	width: 200px;
+}
+UL#menu LI A {
+	float: left;
+	width: 100%;
+	padding: 5px;
+	background-color: #224466;
+	border: 1px #000 solid;
+	border-radius: 10px;
+	color: #efefef;
+	font-size: 1.3em;
+	font-weight: normal;
+	text-align: center;
+}
+UL#menu LI A:hover {
+	background-color: #357;
+	font-weight: normal;
+}
+
+
+
+/*
+	footer
+*/
+DIV#footer {
+	display: none;
+	clear: both;
+	position: absolute;
+	left: 50%;
+	bottom: 0;
+	width: 700px;
+	height: 40px;
+	padding: 15px;
+	margin: 0;
+	margin-left: -365px; /* +15 for padding */
+	background-color: #efefef;
+	color: #000;
+	border-radius: 20px 20px 0 0;
+	border-width: 1px 1px 0;
+	border-style: solid;
+	border-color: #cdcdcd;
+}
+DIV#footer ADDRESS#copyright {
+	margin: 0;
+	float: left;
+}
+DIV#footer P#validation {
+	margin: 0;
+	float: right;
+}
+
+
+
+/*
+	läsaren
+*/
+DIV#reader {
+	display: none;
+	z-index: 100;
+	clear: both;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	min-height: 100%;
+	margin: 0;
+	padding: 0;
+	background-color: #676767;
+}
+DIV#readerContent {
+	z-index: 10;
+	position: relative;
+	left: 50%;
+	width: 60%;
+	margin: 40px 0 40px -33%;
+	padding: 50px;
+	color: #000;
+	font-family: "Times New Roman";
+	font-size: 1.1em;
+	line-height: 1.5;
+	background-image: url("./images/logo_klistrain.png");
+	background-repeat: no-repeat;
+	background-position: 25px 25px;
+	background-color: #fff;
+	border-width: 3px 3px;
+	border-style: solid;
+	border-color: #000;
+	border-radius: 20px;
+	opacity: 1.0;
+}
+DIV#readerContent HR {
+	z-index: 1;
+	display: block;
+	border: 1px solid #ababab;
+	width: 80%;
+	margin: 0 0 50px auto;
+}
+DIV#readerContent P#toplink {
+	text-align: right;
+}
+
+
+
+/*
+	popup-fönster för meddelanden
+*/
+DIV#popup {
+	display: none;
+	z-index: 100;
+	clear: both;
+	position: absolute;
+	top: 30%;
+	left: 50%;
+	width: 300px;
+	margin: 0 0 0 -170px;
+	padding: 40px;
+	color: #000;
+	font-size: 1.0em;
+	text-align: center;
+	background-color: #cdcdcd;
+	border-width: 3px 3px 3px 3px;
+	border-style: solid;
+	border-color: #555;
+	border-radius: 20px;
+	opacity: 1.0;
+}
+
+
+/*
+	INNEHÅLL (huvuddelen på sidan mellan sidhuvud och sidfot)
+*/
+DIV#content {
+	margin: 40px;
+	padding-bottom: 10px;
+}
+DIV#content HR {
+	display: block;
+	border: 1px solid #ababab;
+	margin: 15px 0px;
+	clear: both;
+}
+
+/* tabellen när man listar alla inlägg */
+TABLE.lista {
+	width: 100%;
+}
+TABLE.lista TD, TABLE.lista TH {
+	margin: 0;
+	outline: 0;
+	border: 0;
+	padding: 6px;
+	font-size: 0.9em;
+}
+/* alternera bakgrundsfärg på varannan rad */
+TD.lista_falt1 { background-color: rgb(230,230,245); }
+TD.lista_falt2 { background-color: rgb(220,220,235); }
+
+/* info och "meny" vid visning av post */
+DIV#pasteInfo {
+	float: left;
+	width: 200px;
+	margin: 0 0 20px 0;
+}
+UL#pasteLinks {
+	float: left;
+	margin: 0;
+}
+UL#pasteLinks LI {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+	float: left;
+	width: 150px;
+	text-align: center;
+}
+/*UL#pasteLinks LI A:before {	content: "[ "; }
+UL#pasteLinks LI A:after  {	content: " ]"; }*/
+
+/* tabellen när man presenterar posten (radnummer till vänster och text till höger) */
+TD.codeLineNumber, TD.code {
+	padding: 5px;
+	font-size: 0.9em;
+	vertical-align: top;
+	line-height: 1.5;
+}
+TD.codeLineNumber {
+	text-align: right;
+}
+TD.code {
+
+}
