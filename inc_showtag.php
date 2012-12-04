@@ -19,7 +19,7 @@ if ($res !== FALSE && $count > 0)
 		// snabblänk
 		echo '<fieldset id="fullurl"><legend><a href="./?'.$rad['tag'].'">'.$cfg['full_url'].'/?<b>'.$rad['tag'].'</b></a></legend>'."\n";
 		echo '<div id="pasteInfo">'."\n";
-		echo 'Inskickat: <b>'.datum($rad['time']).'</b><br />'."\n";
+		echo '<b>'.datum($rad['time']).'</b><br />'."\n";
 		echo strlen($rad['paste']).' tecken på '.$numberOfRows.' rader'."\n";
 		echo '</div>';
 		
