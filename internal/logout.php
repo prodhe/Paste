@@ -15,12 +15,12 @@
 	{		
 		unset($_SESSION['adminLogin']);
 		
-		header("Location: ./?admin");
+		header("Location: ../?admin");
 		exit();
 	}
 	else
 	{
-		header("Location: ./");
+		header("Location: ../");
 		exit();
 	}
 

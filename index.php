@@ -6,9 +6,10 @@
 	// version :)
 	DEFINE("VERSION","3.0");
 
-	// Kräv config och lite blandade funktioner
+	// Kräv config, lite blandade funktioner samt databasen
 	require './config.php';
-	require './functions.php';
+	require './internal/functions.php';
+	require './internal/dbconn.php';
 
 	// aktivera sessioner
 	session_start();
@@ -33,9 +34,9 @@
 	<?php
 		// mest showoff för att visa hur sidan ser ut utan CSS ;)
 		if (!in_array("nocss", $url))
-			echo '<link rel="stylesheet" href="./stilmall.css" type="text/css" />'."\n";
+			echo '<link rel="stylesheet" href="./styles/default.css" type="text/css" />'."\n";
 	?>
-	<script type="text/javascript" src="./script.js"></script>
+	<script type="text/javascript" src="./internal/script.js"></script>
 </head>
 <body>
 
@@ -56,14 +57,27 @@
 	// Om vi vill logga in och ut
 	if (in_array("admin",$url))
 	{
-		include './inc_admin.php';
+		// include './internal/inc_admin.php';
+
+		// visa in- eller utloggning
+		if (!isset($_SESSION['adminLogin']))
+		{
+			echo '<form method="post" action="./internal/login.php">'."\n";
+			echo '<fieldset><legend>Logga in för administration</legend>'."\n";
+			echo '<label for="password">Lösenord:</label><input type="password" name="passwordForAdmin" id="password" />'."\n";
+			echo '</fieldset>'."\n";
+			echo '</form>'."\n";
+		}
+		else
+		{
+			echo '<p><a href="./internal/logout.php?admin"><b>Logga ut</b></a></p>'."\n";
+		}
 	}
 	
 	// Om vi vill lägga till en (blank url)
 	else if (empty($url) || $url[0]=="" || $url[0]=="nocss" || $url[0]=="edit")
 	{
 		// koppla upp databasen
-		require './dbconn.php';
 		$db = new DBConn("sqlite",$cfg['sqlite_db']) or die("DBConn fail");
 		
 		// formulär för nytt inlägg
@@ -124,7 +138,7 @@
 				// Om inloggad som admin
 				if (isset($_SESSION['adminLogin']))	{
 					echo '<td class="'.$stil.'" align="center">'.$rad['ip'].'<br />('.gethostbyaddr($rad['ip']).')</td>'.
-						 '<td class="'.$stil.'"><a href="./delete.php?id='.$rad['id'].'" onmouseover="document.getElementById(\'utdrag-'.$rad['id'].'\').style.textDecoration = \'line-through\';" onmouseout="document.getElementById(\'utdrag-'.$rad['id'].'\').style.textDecoration = \'none\';" onclick="return confirm(\'Raderar: '.$rad['tag'].'\n\nÄr du säker?\');"><img src="./images/icon_delete.gif" alt="Radera" /></a>'."\n";
+						 '<td class="'.$stil.'"><a href="./internal/delete.php?id='.$rad['id'].'" onmouseover="document.getElementById(\'utdrag-'.$rad['id'].'\').style.textDecoration = \'line-through\';" onmouseout="document.getElementById(\'utdrag-'.$rad['id'].'\').style.textDecoration = \'none\';" onclick="return confirm(\'Raderar: '.$rad['tag'].'\n\nÄr du säker?\');"><img src="./images/icon_delete.gif" alt="Radera" /></a>'."\n";
 				}
 						
 				echo '</td>'.'</tr>'."\n";
@@ -144,7 +158,7 @@
 	// Kvar finns nu bara ?mumbojumbo och då utgår vi från att det är en post i databasen
 	else
 	{
-		include './inc_showtag.php';
+		include './internal/inc_showtag.php';
 	}
 
 ?>

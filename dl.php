@@ -11,7 +11,7 @@
 		if (!empty($tag))
 		{
 			// Koppla upp databasen
-			require './dbconn.php';
+			require './internal/dbconn.php';
 			$db = new DBConn("sqlite", $cfg['sqlite_db']) or die("Could not create new instance of DBConn.");
 
 			// Förbered data

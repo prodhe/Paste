@@ -1,7 +1,6 @@
 <?php
 
 // Koppla upp databasen
-require './dbconn.php';
 $db = new DBConn("sqlite",$cfg['sqlite_db']) or die("DBConn fail");
 
 // Hämta all data
