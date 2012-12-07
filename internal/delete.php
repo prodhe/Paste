@@ -11,7 +11,7 @@
 	if (isset($_GET['id']) && isset($_SESSION['adminLogin']))
 	{
 		// Kräv config för databasen
-		require './config.php';
+		require '../config.php';
 		require './functions.php';
 		
 		// fixa variablarna
@@ -22,20 +22,20 @@
 		{
 			// Koppla upp databasen
 			require './dbconn.php';
-			$db = new DBConn("sqlite", $cfg['sqlite_db']) or die("Could not create new instance of DBConn.");
+			$db = new DBConn("sqlite", "../".$cfg['sqlite_db']) or die("Could not create new instance of DBConn.");
 
 			// Infoga all data
 			$sql = "DELETE FROM tblPaste WHERE id=".$id."";
 			$db->exec($sql);
 		
 			// Skicka tillbaka till start
-			header("Location: ./");
+			header("Location: ../");
 			exit();
 		
 		}
 		else
 		{
-			header("Location: ./");
+			header("Location: ../");
 			exit();
 		}
 	}

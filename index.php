@@ -4,7 +4,7 @@
 	*/
 	
 	// version :)
-	DEFINE("VERSION","3.0");
+	DEFINE("VERSION","3.1");
 
 	// Kräv config, lite blandade funktioner samt databasen
 	require './config.php';
@@ -24,7 +24,7 @@
 	
 		Paste v<?=VERSION?>
 		
-		Senast uppdaterad 2012-12-02
+		Senast uppdaterad 2012-12-07
 		
 		Skriven av Petter Rodhelind	
 	

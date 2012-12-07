@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,13 +27,12 @@ else
 	$db = new DBConn("sqlite", "../".$cfg['sqlite_db']) or die("DBConn fail");
 	
 	// Installera tabellen
-	$q = "ALTER TABLE tblPaste (
-			parentHEJ TEXT
-		)";
-	$stmt = $db->prepare($q);
-	$stmt->execute();
+	$q = "ALTER TABLE tblPaste ADD COLUMN parent TEXT";
+	$db->exec($q);
+//	$stmt = $db->prepare($q);
+//	$stmt->execute();
 
-	echo 'Paste har nu korrekt installerats i databasen <b>'.$cfg['sqlite_db'].'</b>.<br/><br/>'."\n";
+	echo 'Databasen <b>'.$cfg['sqlite_db'].'</b> har nu uppgraderats för att stödja 3.1.<br/><br/>'."\n";
 
 	echo '<a href="../">Till index</a>';
 
