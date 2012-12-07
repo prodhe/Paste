@@ -118,7 +118,7 @@
 			 '<th>Utdrag</th>';
 		if (isset($_SESSION['adminLogin']))	{
 			echo '<th width="250">IP-adress</th>'.
-				 '<th></th>';
+				 '<th width="20"></th>';
 		}
 		echo '</tr>'."\n";
 

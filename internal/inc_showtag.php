@@ -59,7 +59,7 @@ if ($res !== FALSE && $count > 0)
 
 		// Hämta alla som skapats utifrån ovanstående
 		$count2 = $db->query("SELECT COUNT(*) from tblPaste WHERE parent=\"".$rad['tag']."\"")->fetchColumn();
-		$res2 = $db->query("SELECT id, time, tag, paste FROM tblPaste WHERE parent=\"".$rad['tag']."\" ORDER BY time DESC");
+		$res2 = $db->query("SELECT id, time, ip, tag, paste FROM tblPaste WHERE parent=\"".$rad['tag']."\" ORDER BY time DESC");
 
 		// Visa posten, om kommandot fungerade och den faktiskt hittade något
 		if ($res2 !== FALSE && $count2 > 0)
@@ -77,7 +77,7 @@ if ($res !== FALSE && $count > 0)
 				 '<th>Utdrag</th>';
 			if (isset($_SESSION['adminLogin']))	{
 				echo '<th width="250">IP-adress</th>'.
-					 '<th></th>';
+					 '<th width="20"></th>';
 			}
 			echo '</tr>'."\n";
 
@@ -107,7 +107,7 @@ if ($res !== FALSE && $count > 0)
 					echo '<td class="'.$stil.'" align="center">'.$rad2['ip'].'<br />('.gethostbyaddr($rad2['ip']).')</td>'.
 						 '<td class="'.$stil.'"><a href="./internal/delete.php?id='.$rad2['id'].'" onmouseover="document.getElementById(\'utdrag-'.$rad2['id'].'\').style.textDecoration = \'line-through\';" onmouseout="document.getElementById(\'utdrag-'.$rad2['id'].'\').style.textDecoration = \'none\';" onclick="return confirm(\'Raderar: '.$rad2['tag'].'\n\nÄr du säker?\');"><img src="./images/icon_delete.gif" alt="Radera" /></a>'."\n";
 				}
-						
+
 				echo '</td>'.'</tr>'."\n";
 				
 				// snurra vidare i alternering av färger
@@ -125,8 +125,9 @@ if ($res !== FALSE && $count > 0)
 }
 else
 {
-	echo '<h2>Felaktigt urklipp</h2>'."\n";
-	echo '<p>Kunde inte hitta efterfrågat urklipp i databasen.</p>'."\n";
+	echo '<h2>Objektet hittades inte</h2>'."\n";
+	echo '<p>Jag kunde inte hitta efterfrågat urklipp i databasen. Det kanske har 
+		raderats...</p>'."\n";
 	echo '<p><i><a href="./">Gå till startsidan och klistra in ett eget istället!</i></p>'."\n";
 }
 
