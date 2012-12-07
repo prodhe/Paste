@@ -79,20 +79,29 @@
 	{
 		// koppla upp databasen
 		$db = new DBConn("sqlite",$cfg['sqlite_db']) or die("DBConn fail");
+
+		$tagExists=0;
+		if (isset($_GET['edit'])) {
+			$tag = htmlspecialchars($_GET['edit']);
+			$tagExists = $db->query("SELECT COUNT(*) from tblPaste WHERE tag=\"".$tag."\"")->fetchColumn();
+		}
 		
 		// formulär för nytt inlägg
-		echo'<form method="post" action="add.php">'."\n";
-			echo '<fieldset id="newPaste"><legend>Skapa nytt</legend>'."\n";
-			echo '<textarea cols="100" rows="25" name="paste" id="paste">'; 
-			if (isset($_GET['edit'])) {
-				$tag = htmlspecialchars($_GET['edit']);
-				$count = $db->query("SELECT COUNT(*) from tblPaste WHERE tag=\"".$tag."\"")->fetchColumn();
-				$res = $db->query("SELECT tag, paste FROM tblPaste WHERE tag=\"".$tag."\"")->fetch();
-				echo htmlspecialchars($res['paste']);
-			}
-			echo '</textarea><br /><br />'."\n";
-			echo '<input type="submit" name="spara_urklipp" value="Spara" onclick="return checkForEmpty(\'paste\');" />'."\n";
-			echo '</fieldset>'."\n";
+		echo'<form method="post" action="./internal/add.php">'."\n";
+		echo '<fieldset id="newPaste"><legend>Skapa nytt</legend>'."\n";
+		echo '<textarea cols="100" rows="25" name="paste" id="paste">'; 
+		if ($tagExists > 0) {
+			$res = $db->query("SELECT tag, paste FROM tblPaste WHERE tag=\"".$tag."\"")->fetch();
+			echo htmlspecialchars($res['paste']);
+		}
+		echo '</textarea><br /><br />'."\n";
+		echo '<input type="hidden" name="parent" id="parent" value="';
+		if ($tagExists > 0) {
+			echo $tag;
+		}
+		echo '" />'."\n";
+		echo '<input type="submit" name="spara_urklipp" value="Spara" onclick="return checkForEmpty(\'paste\');" />'."\n";
+		echo '</fieldset>'."\n";
 		echo'</form>'."\n";
 		
 		echo '<br />'."\n";
@@ -100,58 +109,58 @@
 		// lista tidigare
 		echo '<fieldset id="oldPastes"><legend>Lagrade</legend>'."\n";
 		
-			echo '<table cellpadding="2" cellspacing="1" class="lista">'."\n";
+		echo '<table cellpadding="2" cellspacing="1" class="lista">'."\n";
+		echo '<tr>';
+		if (isset($_SESSION['adminLogin']))	{
+			echo '<th width="30">&nbsp;</th>';
+		}
+		echo '<th width="200">Datum</th>'.
+			 '<th>Utdrag</th>';
+		if (isset($_SESSION['adminLogin']))	{
+			echo '<th width="250">IP-adress</th>'.
+				 '<th></th>';
+		}
+		echo '</tr>'."\n";
+
+		// för alternerande färg på raderna
+		$i=0;
+
+		// Hämta all data
+		foreach ($db->query("SELECT id, ip, time, tag, paste FROM tblPaste ORDER BY time DESC") as $rad) {
+			
+			$utdrag = "";
+			
+			if (strlen($rad['paste']) > 200) {
+				$utdrag = substr(htmlspecialchars($rad['paste']), 0, 195) . ' >>>';
+			} else {
+				$utdrag = htmlspecialchars($rad['paste']);
+			}
+
+			$stil = ($i%2==0) ? "lista_falt1" : "lista_falt2";
 			echo '<tr>';
 			if (isset($_SESSION['adminLogin']))	{
-				echo '<th width="30">&nbsp;</th>';
+				echo '<td class="'.$stil.'" align="right"><a href="./?'.$rad['tag'].'"><b>'.$rad['tag'].'</b></a></td>';
 			}
-			echo '<th width="200">Datum</th>'.
-				 '<th>Utdrag</th>';
+			echo '<td class="'.$stil.'" align="left"><a href="./?'.$rad['tag'].'">'.datum($rad['time']).'</a></td>'.
+				 '<td class="'.$stil.'" id="utdrag-'.$rad['id'].'"><a href="./?'.$rad['tag'].'">'.$utdrag.'</a></td>';
+			
+			// Om inloggad som admin
 			if (isset($_SESSION['adminLogin']))	{
-				echo '<th width="250">IP-adress</th>'.
-					 '<th></th>';
+				echo '<td class="'.$stil.'" align="center">'.$rad['ip'].'<br />('.gethostbyaddr($rad['ip']).')</td>'.
+					 '<td class="'.$stil.'"><a href="./internal/delete.php?id='.$rad['id'].'" onmouseover="document.getElementById(\'utdrag-'.$rad['id'].'\').style.textDecoration = \'line-through\';" onmouseout="document.getElementById(\'utdrag-'.$rad['id'].'\').style.textDecoration = \'none\';" onclick="return confirm(\'Raderar: '.$rad['tag'].'\n\nÄr du säker?\');"><img src="./images/icon_delete.gif" alt="Radera" /></a>'."\n";
 			}
-			echo '</tr>'."\n";
+					
+			echo '</td>'.'</tr>'."\n";
+			
+			// snurra vidare i alternering av färger
+			$i++;
+		}
+		// else
+		// {
+		// 	echo '<tr><td class="lista_falt1">Inga urklipp är lagrade i databasen.</td></tr>'."\n";
+		// }
 
-			// för alternerande färg på raderna
-			$i=0;
-
-			// Hämta all data
-			foreach ($db->query("SELECT id, ip, time, tag, paste FROM tblPaste ORDER BY time DESC") as $rad) {
-				
-				$utdrag = "";
-				
-				if (strlen($rad['paste']) > 200) {
-					$utdrag = substr(htmlspecialchars($rad['paste']), 0, 195) . ' >>>';
-				} else {
-					$utdrag = htmlspecialchars($rad['paste']);
-				}
-
-				$stil = ($i%2==0) ? "lista_falt1" : "lista_falt2";
-				echo '<tr>';
-				if (isset($_SESSION['adminLogin']))	{
-					echo '<td class="'.$stil.'" align="right"><a href="./?'.$rad['tag'].'"><b>'.$rad['tag'].'</b></a></td>';
-				}
-				echo '<td class="'.$stil.'" align="left"><a href="./?'.$rad['tag'].'">'.datum($rad['time']).'</a></td>'.
-					 '<td class="'.$stil.'" id="utdrag-'.$rad['id'].'"><a href="./?'.$rad['tag'].'">'.$utdrag.'</a></td>';
-				
-				// Om inloggad som admin
-				if (isset($_SESSION['adminLogin']))	{
-					echo '<td class="'.$stil.'" align="center">'.$rad['ip'].'<br />('.gethostbyaddr($rad['ip']).')</td>'.
-						 '<td class="'.$stil.'"><a href="./internal/delete.php?id='.$rad['id'].'" onmouseover="document.getElementById(\'utdrag-'.$rad['id'].'\').style.textDecoration = \'line-through\';" onmouseout="document.getElementById(\'utdrag-'.$rad['id'].'\').style.textDecoration = \'none\';" onclick="return confirm(\'Raderar: '.$rad['tag'].'\n\nÄr du säker?\');"><img src="./images/icon_delete.gif" alt="Radera" /></a>'."\n";
-				}
-						
-				echo '</td>'.'</tr>'."\n";
-				
-				// snurra vidare i alternering av färger
-				$i++;
-			}
-			// else
-			// {
-			// 	echo '<tr><td class="lista_falt1">Inga urklipp är lagrade i databasen.</td></tr>'."\n";
-			// }
-
-			echo '</table>'."\n";
+		echo '</table>'."\n";
 		echo '</fieldset>'."\n";
 	}
 	

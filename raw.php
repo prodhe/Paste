@@ -24,7 +24,8 @@
 			if ($stmt !== FALSE) {
 				foreach ($stmt as $rad) {
 					echo '<!DOCTYPE html>'."\n".
-						 '<html><head><title></title></head><body><pre style="word-wrap: break-word; white-space: pre-wrap;">'."\n";
+						 '<html><head><title></title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /></head><body><pre style="word-wrap: break-word; white-space: pre-wrap;">'."\n";
+	
 					echo htmlspecialchars($rad['paste']);
 					echo '</pre>'."\n";
 					echo '</body></html>';

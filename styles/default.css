@@ -318,23 +318,21 @@ TD.lista_falt2 { background-color: rgb(220,220,235); }
 /* info och "meny" vid visning av post */
 DIV#pasteInfo {
 	float: left;
-	width: 200px;
-	margin: 0 0 20px 0;
+	margin: 0;
 }
 UL#pasteLinks {
-	float: left;
-	margin: 0;
+	float: right;
+	margin: 0px;
 }
 UL#pasteLinks LI {
-	margin: 0;
+	margin: 0 0 0 30px;
 	padding: 0;
 	list-style-type: none;
 	float: left;
-	width: 150px;
-	text-align: center;
+	text-align: left;
 }
-/*UL#pasteLinks LI A:before {	content: "[ "; }
-UL#pasteLinks LI A:after  {	content: " ]"; }*/
+/*UL#pasteLinks LI A:before {	content: " < "; }*/
+/*UL#pasteLinks LI A:after  {	content: " > "; }*/
 
 /* tabellen när man presenterar posten (radnummer till vänster och text till höger) */
 TD.codeLineNumber, TD.code {
