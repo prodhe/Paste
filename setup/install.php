@@ -6,7 +6,7 @@
 <body>
 <?php
 
-require './config.php';
+require '../config.php';
 
 if (!isset($_GET['install']))
 {
@@ -23,8 +23,8 @@ else
 {
 
 	// databas
-	require './dbconn.php';
-	$db = new DBConn("sqlite", $cfg['sqlite_db']) or die("DBConn fail");
+	require '../internal/dbconn.php';
+	$db = new DBConn("sqlite", "../".$cfg['sqlite_db']) or die("DBConn fail");
 	
 	// Installera tabellen
 	$q = "CREATE TABLE IF NOT EXISTS tblPaste (
@@ -32,6 +32,7 @@ else
 			time INTEGER,
 			ip TEXT,
 			tag TEXT,
+			parent TEXT,
 			paste TEXT
 		)";
 	$stmt = $db->prepare($q);
@@ -45,7 +46,7 @@ else
 
 	echo 'Paste har nu korrekt installerats i databasen <b>'.$cfg['sqlite_db'].'</b>.<br/><br/>'."\n";
 
-	echo '<a href="./">Till index</a>';
+	echo '<a href="../">Till index</a>';
 
 }
 
