@@ -1,0 +1,13 @@
+PASTE
+=====
+
+A web application for copy-paste functionality online.
+
+Supports:
+
+- A fancy reader in the style of "Reader" in Safari
+- Download the post as a pure text file
+- View the post as raw data in the browser
+- Fork the post and create a new one, based on the parent
+
+Created by Petter Rodhelind
