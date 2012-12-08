@@ -15,8 +15,5 @@
 	
 	// Lösenord för administration
 	$cfg['adminPassword'] = "gotroot@paste";
-	
-	// Default timezone
-	date_default_timezone_set('Europe/Stockholm');
 
 ?>
