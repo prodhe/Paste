@@ -1,4 +1,5 @@
-# PASTE
+Paste
+=====
 
 A web application for copy-paste online.
 
