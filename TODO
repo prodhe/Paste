@@ -3,3 +3,4 @@ TODO
 
 - settings i databasen istället för ./config.php (121209)
 - rekursiv trädstruktur i presentationen av lagrad data? bra eller dåligt?
+- admin ska kunna radera i inc_showtag
